@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Footer() {
   const [modalOpen, setModalOpen] = useState<string | null>(null);
@@ -50,6 +51,30 @@ export default function Footer() {
                 Quick Links
               </h4>
               <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/blog"
+                    className="text-sm text-stone-400 hover:text-stone-100 transition-colors"
+                  >
+                    Journal
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/account"
+                    className="text-sm text-stone-400 hover:text-stone-100 transition-colors"
+                  >
+                    My Account
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/track-order"
+                    className="text-sm text-stone-400 hover:text-stone-100 transition-colors"
+                  >
+                    Track Order
+                  </Link>
+                </li>
                 <li>
                   <button
                     onClick={() => openModal("privacy")}

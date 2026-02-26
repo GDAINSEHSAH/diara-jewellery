@@ -1,6 +1,20 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
+import { ToastProvider } from "@/context/ToastContext";
+import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { LoyaltyProvider } from "@/context/LoyaltyContext";
+import { OrderProvider } from "@/context/OrderContext";
+import { CouponProvider } from "@/context/CouponContext";
+import { CompareProvider } from "@/context/CompareContext";
+import CartDrawer from "@/components/CartDrawer";
+import WishlistDrawer from "@/components/WishlistDrawer";
+import ToastContainer from "@/components/Toast";
+import PromoBanner from "@/components/PromoBanner";
+import CompareBar from "@/components/CompareBar";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -69,7 +83,30 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${inter.variable} font-inter antialiased`}
       >
-        {children}
+        <ToastProvider>
+          <AuthProvider>
+            <LoyaltyProvider>
+              <RecentlyViewedProvider>
+                <OrderProvider>
+                  <CartProvider>
+                    <CouponProvider>
+                      <WishlistProvider>
+                        <CompareProvider>
+                          <PromoBanner />
+                          {children}
+                          <CartDrawer />
+                          <WishlistDrawer />
+                          <CompareBar />
+                          <ToastContainer />
+                        </CompareProvider>
+                      </WishlistProvider>
+                    </CouponProvider>
+                  </CartProvider>
+                </OrderProvider>
+              </RecentlyViewedProvider>
+            </LoyaltyProvider>
+          </AuthProvider>
+        </ToastProvider>
       </body>
     </html>
   );

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -18,6 +20,8 @@ const menuItems = [
 ];
 
 export default function MobileMenu({ isOpen, onClose, onNavigate }: MobileMenuProps) {
+  const { isLoggedIn } = useAuth();
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -79,6 +83,52 @@ export default function MobileMenu({ isOpen, onClose, onNavigate }: MobileMenuPr
                 </button>
               </li>
             ))}
+            <li>
+              <Link
+                href="/products"
+                onClick={onClose}
+                className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left inline-flex items-center gap-2"
+              >
+                Shop
+                <span className="text-xs bg-stone-800 text-white px-2 py-0.5 rounded-full font-normal">
+                  New
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/blog"
+                onClick={onClose}
+                className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left block"
+              >
+                Journal
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/offers"
+                onClick={onClose}
+                className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left block"
+              >
+                Offers
+              </Link>
+            </li>
+
+            {/* Divider */}
+            <li>
+              <div className="border-t border-stone-200 pt-6">
+                <Link
+                  href={isLoggedIn ? "/account" : "/auth/login"}
+                  onClick={onClose}
+                  className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left inline-flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  {isLoggedIn ? "My Account" : "Sign In"}
+                </Link>
+              </div>
+            </li>
           </ul>
         </nav>
       </div>
