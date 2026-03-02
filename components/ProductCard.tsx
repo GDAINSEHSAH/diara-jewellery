@@ -24,9 +24,9 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
     : 0;
 
   return (
-    <div className="group relative bg-white rounded-2xl overflow-hidden border border-stone-100 hover:border-stone-200 hover:shadow-xl transition-all duration-500">
+    <div className="group relative bg-white dark:bg-stone-800 rounded-2xl overflow-hidden border border-stone-100 dark:border-stone-700 hover:border-stone-200 dark:hover:border-stone-600 hover:shadow-xl transition-all duration-500">
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-stone-50">
+      <div className="relative aspect-square overflow-hidden bg-stone-50 dark:bg-stone-700">
         <Link href={`/products/${product.id}`}>
           <Image
             src={product.images[0]}
@@ -115,7 +115,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
       {/* Info */}
       <div className="p-4">
         <Link href={`/products/${product.id}`}>
-          <h3 className="font-medium text-stone-800 hover:text-stone-600 transition-colors truncate">
+          <h3 className="font-medium text-stone-800 dark:text-stone-100 hover:text-stone-600 dark:hover:text-stone-300 transition-colors truncate">
             {product.name}
           </h3>
         </Link>
@@ -142,7 +142,7 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
 
         {/* Price */}
         <div className="flex items-center gap-2 mt-2">
-          <span className="text-lg font-semibold text-stone-800">
+          <span className="text-lg font-semibold text-stone-800 dark:text-stone-100">
             ₹{product.price.toLocaleString("en-IN")}
           </span>
           {product.originalPrice && (

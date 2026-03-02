@@ -5,9 +5,15 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Collections from "@/components/Collections";
 import Craft from "@/components/Craft";
+import Testimonials from "@/components/Testimonials";
 import Gallery from "@/components/Gallery";
+import Newsletter from "@/components/Newsletter";
+import RecentlyViewed from "@/components/RecentlyViewed";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import BackToTop from "@/components/BackToTop";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   const scrollToSection = (id: string) => {
@@ -26,6 +32,7 @@ export default function Home() {
 
   return (
     <main className="bg-gradient-to-b from-slate-50 via-white to-stone-50">
+      <LoadingScreen />
       <Header />
       <Hero
         onExploreClick={() => scrollToSection("collections")}
@@ -34,9 +41,16 @@ export default function Home() {
       <About />
       <Collections onViewLookbook={() => scrollToSection("gallery")} />
       <Craft />
+      <Testimonials />
       <Gallery />
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <RecentlyViewed />
+      </div>
+      <Newsletter />
       <Contact />
       <Footer />
+      <WhatsAppButton />
+      <BackToTop />
     </main>
   );
 }

@@ -68,7 +68,7 @@ export default function ProductsPage() {
     priceRange[1] !== 15000;
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
+    <div className="min-h-screen bg-[#FDFBF7] dark:bg-stone-900">
       {/* Header spacer */}
       <div className="h-20" />
 
@@ -86,7 +86,7 @@ export default function ProductsPage() {
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <h1 className="font-playfair text-3xl md:text-4xl text-stone-800">
+            <h1 className="font-playfair text-3xl md:text-4xl text-stone-800 dark:text-stone-100">
               Our Collection
             </h1>
             <p className="text-stone-500 mt-2">
@@ -114,7 +114,7 @@ export default function ProductsPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="px-4 py-2.5 border border-stone-200 rounded-full text-sm text-stone-600 bg-white hover:bg-stone-50 transition-colors outline-none cursor-pointer"
+              className="px-4 py-2.5 border border-stone-200 dark:border-stone-600 rounded-full text-sm text-stone-600 dark:text-stone-300 bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors outline-none cursor-pointer"
             >
               <option value="featured">Featured</option>
               <option value="price-asc">Price: Low to High</option>
@@ -137,7 +137,7 @@ export default function ProductsPage() {
             <div className="lg:sticky lg:top-24 space-y-6 pb-8 lg:pb-0">
               {/* Category filter */}
               <div>
-                <h3 className="text-sm font-semibold text-stone-800 uppercase tracking-wider mb-3">
+                <h3 className="text-sm font-semibold text-stone-800 dark:text-stone-200 uppercase tracking-wider mb-3">
                   Collection
                 </h3>
                 <div className="space-y-1.5">
@@ -147,8 +147,8 @@ export default function ProductsPage() {
                       onClick={() => setSelectedCategory(cat)}
                       className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                         selectedCategory === cat
-                          ? "bg-stone-800 text-white"
-                          : "text-stone-600 hover:bg-stone-100"
+                          ? "bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-800"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
                       }`}
                     >
                       {cat === "all" ? "All Collections" : categoryLabels[cat]}
@@ -159,7 +159,7 @@ export default function ProductsPage() {
 
               {/* Type filter */}
               <div>
-                <h3 className="text-sm font-semibold text-stone-800 uppercase tracking-wider mb-3">
+                <h3 className="text-sm font-semibold text-stone-800 dark:text-stone-200 uppercase tracking-wider mb-3">
                   Type
                 </h3>
                 <div className="space-y-1.5">
@@ -169,8 +169,8 @@ export default function ProductsPage() {
                       onClick={() => setSelectedType(type)}
                       className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                         selectedType === type
-                          ? "bg-stone-800 text-white"
-                          : "text-stone-600 hover:bg-stone-100"
+                          ? "bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-800"
+                          : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
                       }`}
                     >
                       {type === "all" ? "All Types" : typeLabels[type]}
@@ -181,7 +181,7 @@ export default function ProductsPage() {
 
               {/* Price range */}
               <div>
-                <h3 className="text-sm font-semibold text-stone-800 uppercase tracking-wider mb-3">
+                <h3 className="text-sm font-semibold text-stone-800 dark:text-stone-200 uppercase tracking-wider mb-3">
                   Price Range
                 </h3>
                 <div className="space-y-3">

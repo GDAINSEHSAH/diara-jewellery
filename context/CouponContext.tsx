@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { coupons, Coupon } from "@/data/coupons";
 
 interface CouponContextType {
@@ -9,6 +9,9 @@ interface CouponContextType {
   applyCoupon: (code: string, orderTotal: number) => string | null;
   removeCoupon: () => void;
   calculateDiscount: (coupon: Coupon, orderTotal: number) => number;
+  wonCouponCode: string | null;
+  setWonCoupon: (code: string) => void;
+  clearWonCoupon: () => void;
 }
 
 const CouponContext = createContext<CouponContextType | undefined>(undefined);
@@ -16,6 +19,28 @@ const CouponContext = createContext<CouponContextType | undefined>(undefined);
 export function CouponProvider({ children }: { children: ReactNode }) {
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const [discountAmount, setDiscountAmount] = useState(0);
+  const [wonCouponCode, setWonCouponCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("diara-won-coupon");
+      if (saved) setWonCouponCode(saved);
+    } catch {}
+  }, []);
+
+  const setWonCoupon = (code: string) => {
+    setWonCouponCode(code);
+    try {
+      localStorage.setItem("diara-won-coupon", code);
+    } catch {}
+  };
+
+  const clearWonCoupon = () => {
+    setWonCouponCode(null);
+    try {
+      localStorage.removeItem("diara-won-coupon");
+    } catch {}
+  };
 
   const calculateDiscount = (coupon: Coupon, orderTotal: number): number => {
     if (coupon.discountType === "flat") {
@@ -48,7 +73,16 @@ export function CouponProvider({ children }: { children: ReactNode }) {
 
   return (
     <CouponContext.Provider
-      value={{ appliedCoupon, discountAmount, applyCoupon, removeCoupon, calculateDiscount }}
+      value={{
+        appliedCoupon,
+        discountAmount,
+        applyCoupon,
+        removeCoupon,
+        calculateDiscount,
+        wonCouponCode,
+        setWonCoupon,
+        clearWonCoupon,
+      }}
     >
       {children}
     </CouponContext.Provider>

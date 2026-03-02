@@ -109,9 +109,17 @@ export default function CartDrawer() {
                     <h3 className="text-sm font-medium text-stone-800 truncate">
                       {item.product.name}
                     </h3>
-                    <p className="text-sm text-stone-500 mt-0.5">
-                      {item.product.material}
-                    </p>
+                    {item.customization ? (
+                      <div className="text-xs text-stone-500 mt-0.5 space-y-0.5">
+                        <p className="capitalize">{item.customization.baseType} · {item.customization.style} · {item.customization.finish}</p>
+                        {item.customization.stone !== "none" && <p>Stone: {item.customization.stone}</p>}
+                        {item.customization.engraving && <p>Engraving: &ldquo;{item.customization.engraving}&rdquo;</p>}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-stone-500 mt-0.5">
+                        {item.product.material}
+                      </p>
+                    )}
                     <div className="flex items-center justify-between mt-2">
                       <div className="flex items-center gap-2 bg-white rounded-full border border-stone-200">
                         <button

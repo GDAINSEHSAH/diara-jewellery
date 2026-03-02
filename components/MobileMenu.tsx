@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import ThemeToggle from "./ThemeToggle";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -44,9 +45,9 @@ export default function MobileMenu({ isOpen, onClose, onNavigate }: MobileMenuPr
       />
 
       {/* Menu Panel */}
-      <div className="absolute top-0 right-0 w-full max-w-sm h-full bg-[#FAF8F5] shadow-2xl">
-        <div className="flex justify-between items-center px-6 py-6 border-b border-stone-200">
-          <span className="font-playfair text-2xl text-stone-800">DIARA</span>
+      <div className="absolute top-0 right-0 w-full max-w-sm h-full bg-[#FAF8F5] dark:bg-stone-900 shadow-2xl">
+        <div className="flex justify-between items-center px-6 py-6 border-b border-stone-200 dark:border-stone-700">
+          <span className="font-playfair text-2xl text-stone-800 dark:text-stone-100">DIARA</span>
           <button
             onClick={onClose}
             className="p-2 hover:bg-stone-100 rounded-full transition-colors"
@@ -113,14 +114,45 @@ export default function MobileMenu({ isOpen, onClose, onNavigate }: MobileMenuPr
                 Offers
               </Link>
             </li>
+            <li>
+              <Link
+                href="/builder"
+                onClick={onClose}
+                className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left inline-flex items-center gap-2"
+              >
+                Builder
+                <span className="text-xs bg-amber-600 text-white px-2 py-0.5 rounded-full font-normal">
+                  New
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/zodiac"
+                onClick={onClose}
+                className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left block"
+              >
+                Zodiac
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/quiz"
+                onClick={onClose}
+                className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left block"
+              >
+                Quiz
+              </Link>
+            </li>
 
             {/* Divider */}
             <li>
-              <div className="border-t border-stone-200 pt-6">
+              <div className="border-t border-stone-200 dark:border-stone-700 pt-6 space-y-4">
+                <ThemeToggle variant="full" />
                 <Link
                   href={isLoggedIn ? "/account" : "/auth/login"}
                   onClick={onClose}
-                  className="text-stone-700 text-lg font-medium hover:text-stone-900 transition-colors w-full text-left inline-flex items-center gap-2"
+                  className="text-stone-700 dark:text-stone-300 text-lg font-medium hover:text-stone-900 dark:hover:text-stone-100 transition-colors w-full text-left inline-flex items-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

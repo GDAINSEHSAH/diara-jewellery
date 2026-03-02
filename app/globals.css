@@ -14,10 +14,11 @@
   }
 
   body {
-    @apply text-stone-700 bg-[#FDFBF7];
+    @apply text-stone-700 bg-[#FDFBF7] dark:text-stone-300 dark:bg-stone-900;
     font-feature-settings: "kern" 1, "liga" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   * {
@@ -134,8 +135,16 @@
     @apply bg-stone-100;
   }
 
+  .dark ::-webkit-scrollbar-track {
+    @apply bg-stone-800;
+  }
+
   ::-webkit-scrollbar-thumb {
     @apply bg-stone-400 rounded-full;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-stone-600 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -145,6 +154,35 @@
   /* Focus visible styles */
   *:focus-visible {
     @apply outline-none ring-2 ring-stone-400 ring-offset-2;
+  }
+
+  /* Toast animations */
+  @keyframes toastIn {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes toastProgress {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
+
+  .animate-toast-in {
+    animation: toastIn 0.3s ease-out forwards;
+  }
+
+  .animate-toast-progress {
+    animation: toastProgress 3s linear forwards;
   }
 }
 

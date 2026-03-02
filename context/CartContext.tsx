@@ -2,15 +2,17 @@
 
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
 import { Product } from "@/data/products";
+import { CustomJewelleryConfig } from "@/data/builder";
 
 export interface CartItem {
   product: Product;
   quantity: number;
+  customization?: CustomJewelleryConfig;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, customization?: CustomJewelleryConfig) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -28,8 +30,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const addToCart = useCallback((product: Product) => {
+  const addToCart = useCallback((product: Product, customization?: CustomJewelleryConfig) => {
     setItems((prev) => {
+      // Custom builder items always get their own entry (unique IDs)
+      if (customization || product.id.startsWith("custom-")) {
+        return [...prev, { product, quantity: 1, customization }];
+      }
       const existing = prev.find((item) => item.product.id === product.id);
       if (existing) {
         return prev.map((item) =>

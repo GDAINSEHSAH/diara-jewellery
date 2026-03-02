@@ -1,7 +1,28 @@
+"use client";
+
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import { galleryImages } from "@/data/content";
+import Lightbox from "./Lightbox";
 
 export default function Gallery() {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const openLightbox = (index: number) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+
+  const goToPrev = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev !== null ? (prev - 1 + galleryImages.length) % galleryImages.length : null
+    );
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev !== null ? (prev + 1) % galleryImages.length : null
+    );
+  }, []);
+
   return (
     <section id="gallery" className="py-20 md:py-32 px-6 lg:px-8 bg-gradient-to-b from-[#FAF8F5] via-stone-50/10 to-[#FAF8F5] relative overflow-hidden">
       {/* Decorative background elements */}
@@ -48,9 +69,10 @@ export default function Gallery() {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
-          {galleryImages.map((image) => (
+          {galleryImages.map((image, index) => (
             <div
               key={image.id}
+              onClick={() => openLightbox(index)}
               className="aspect-square overflow-hidden rounded-sm group cursor-pointer relative hover:scale-[1.02] transition-all duration-500 shadow-md hover:shadow-xl bg-stone-100"
             >
               {/* Real jewellery image */}
@@ -70,7 +92,10 @@ export default function Gallery() {
 
               {/* Hover text */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-xs text-stone-700 font-medium tracking-wider bg-white/80 px-3 py-1.5 rounded-full backdrop-blur-sm">
+                <span className="text-xs text-stone-700 font-medium tracking-wider bg-white/80 px-3 py-1.5 rounded-full backdrop-blur-sm flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
                   View
                 </span>
               </div>
@@ -113,6 +138,17 @@ export default function Gallery() {
           </a>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={galleryImages}
+          currentIndex={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={goToPrev}
+          onNext={goToNext}
+        />
+      )}
     </section>
   );
 }

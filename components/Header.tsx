@@ -6,9 +6,11 @@ import { usePathname } from "next/navigation";
 import MobileMenu from "./MobileMenu";
 import SearchModal from "./SearchModal";
 import LoyaltyBadge from "./LoyaltyBadge";
+import ThemeToggle from "./ThemeToggle";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
+import { useTheme } from "@/context/ThemeContext";
 
 const navItems = [
   { label: "Home", id: "home" },
@@ -21,6 +23,9 @@ const navItems = [
 
 const pageLinks = [
   { label: "Shop", href: "/products" },
+  { label: "Builder", href: "/builder" },
+  { label: "Zodiac", href: "/zodiac" },
+  { label: "Quiz", href: "/quiz" },
   { label: "Journal", href: "/blog" },
   { label: "Offers", href: "/offers" },
 ];
@@ -39,6 +44,7 @@ export default function Header() {
   const { totalItems: cartItems, openCart } = useCart();
   const { totalItems: wishlistItems, openWishlist } = useWishlist();
   const { user, isLoggedIn, logout } = useAuth();
+  const { isDark } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,7 +107,7 @@ export default function Header() {
       <header
         className={`fixed left-0 right-0 z-40 transition-all duration-500 ${
           showScrolledStyle
-            ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-slate-100/50"
+            ? "bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl shadow-lg border-b border-slate-100/50 dark:border-stone-700/50"
             : "bg-black/30 backdrop-blur-md"
         }`}
         style={{ top: "var(--banner-height, 0px)" }}
@@ -112,7 +118,7 @@ export default function Header() {
             <Link
               href="/"
               className={`font-playfair text-2xl md:text-3xl tracking-wider transition-all duration-300 relative group ${
-                showScrolledStyle ? "text-stone-800 hover:text-slate-800" : "text-white hover:text-white/80"
+                showScrolledStyle ? "text-stone-800 dark:text-stone-100 hover:text-slate-800 dark:hover:text-white" : "text-white hover:text-white/80"
               }`}
             >
               <span className="relative">
@@ -133,8 +139,8 @@ export default function Header() {
                       className={`text-sm font-medium tracking-wider transition-all duration-300 relative py-2 group ${
                         showScrolledStyle
                           ? isHomePage && activeSection === item.id
-                            ? "text-slate-800"
-                            : "text-stone-600 hover:text-slate-700"
+                            ? "text-slate-800 dark:text-stone-100"
+                            : "text-stone-600 dark:text-stone-400 hover:text-slate-700 dark:hover:text-stone-200"
                           : isHomePage && activeSection === item.id
                             ? "text-white"
                             : "text-white/70 hover:text-white"
@@ -193,16 +199,21 @@ export default function Header() {
               {/* Loyalty Badge (when logged in) */}
               {isLoggedIn && showScrolledStyle && <LoyaltyBadge />}
 
+              {/* Theme Toggle */}
+              <div className={showScrolledStyle ? "" : "[&_button]:hover:bg-white/10 [&_svg]:text-white"}>
+                <ThemeToggle />
+              </div>
+
               {/* Search */}
               <button
                 onClick={() => setSearchOpen(true)}
                 className={`p-2.5 rounded-full transition-colors ${
-                  showScrolledStyle ? "hover:bg-stone-100" : "hover:bg-white/10"
+                  showScrolledStyle ? "hover:bg-stone-100 dark:hover:bg-stone-700" : "hover:bg-white/10"
                 }`}
                 aria-label="Search"
               >
                 <svg
-                  className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700" : "text-white"}`}
+                  className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700 dark:text-stone-300" : "text-white"}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -222,12 +233,12 @@ export default function Header() {
                     }
                   }}
                   className={`p-2.5 rounded-full transition-colors ${
-                    showScrolledStyle ? "hover:bg-stone-100" : "hover:bg-white/10"
+                    showScrolledStyle ? "hover:bg-stone-100 dark:hover:bg-stone-700" : "hover:bg-white/10"
                   }`}
                   aria-label="Account"
                 >
                   <svg
-                    className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700" : "text-white"}`}
+                    className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700 dark:text-stone-300" : "text-white"}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -238,29 +249,29 @@ export default function Header() {
 
                 {/* User Dropdown */}
                 {userMenuOpen && isLoggedIn && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-stone-100 py-2 z-50">
-                    <div className="px-4 py-2 border-b border-stone-100">
-                      <p className="text-sm font-medium text-stone-800 truncate">{user?.name}</p>
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-stone-800 rounded-xl shadow-xl border border-stone-100 dark:border-stone-700 py-2 z-50">
+                    <div className="px-4 py-2 border-b border-stone-100 dark:border-stone-700">
+                      <p className="text-sm font-medium text-stone-800 dark:text-stone-100 truncate">{user?.name}</p>
                       <p className="text-xs text-stone-400 truncate">{user?.email}</p>
                     </div>
                     <Link
                       href="/account"
                       onClick={() => setUserMenuOpen(false)}
-                      className="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 transition-colors"
+                      className="block px-4 py-2 text-sm text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                     >
                       Profile
                     </Link>
                     <Link
                       href="/account/orders"
                       onClick={() => setUserMenuOpen(false)}
-                      className="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 transition-colors"
+                      className="block px-4 py-2 text-sm text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                     >
                       Orders
                     </Link>
                     <Link
                       href="/account/loyalty"
                       onClick={() => setUserMenuOpen(false)}
-                      className="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 transition-colors"
+                      className="block px-4 py-2 text-sm text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                     >
                       Loyalty Points
                     </Link>
@@ -269,7 +280,7 @@ export default function Header() {
                         logout();
                         setUserMenuOpen(false);
                       }}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                      className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                     >
                       Sign Out
                     </button>
@@ -281,12 +292,12 @@ export default function Header() {
               <button
                 onClick={openWishlist}
                 className={`relative p-2.5 rounded-full transition-colors ${
-                  showScrolledStyle ? "hover:bg-stone-100" : "hover:bg-white/10"
+                  showScrolledStyle ? "hover:bg-stone-100 dark:hover:bg-stone-700" : "hover:bg-white/10"
                 }`}
                 aria-label="Wishlist"
               >
                 <svg
-                  className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700" : "text-white"}`}
+                  className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700 dark:text-stone-300" : "text-white"}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -304,12 +315,12 @@ export default function Header() {
               <button
                 onClick={openCart}
                 className={`relative p-2.5 rounded-full transition-colors ${
-                  showScrolledStyle ? "hover:bg-stone-100" : "hover:bg-white/10"
+                  showScrolledStyle ? "hover:bg-stone-100 dark:hover:bg-stone-700" : "hover:bg-white/10"
                 }`}
                 aria-label="Shopping bag"
               >
                 <svg
-                  className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700" : "text-white"}`}
+                  className={`w-5 h-5 ${showScrolledStyle ? "text-stone-700 dark:text-stone-300" : "text-white"}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -327,12 +338,12 @@ export default function Header() {
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 className={`lg:hidden p-2 rounded-full transition-colors ml-1 ${
-                  showScrolledStyle ? "hover:bg-stone-100" : "hover:bg-white/10"
+                  showScrolledStyle ? "hover:bg-stone-100 dark:hover:bg-stone-700" : "hover:bg-white/10"
                 }`}
                 aria-label="Open menu"
               >
                 <svg
-                  className={`w-6 h-6 ${showScrolledStyle ? "text-stone-700" : "text-white"}`}
+                  className={`w-6 h-6 ${showScrolledStyle ? "text-stone-700 dark:text-stone-300" : "text-white"}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

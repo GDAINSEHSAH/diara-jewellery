@@ -12,6 +12,7 @@ import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
 import ProductCard from "@/components/ProductCard";
 import QuickView from "@/components/QuickView";
 import ReviewSection from "@/components/ReviewSection";
+import ProductRecommendations from "@/components/ProductRecommendations";
 import SizeGuide from "@/components/SizeGuide";
 import ImageZoom from "@/components/ImageZoom";
 import ProductLightbox from "@/components/ProductLightbox";
@@ -76,7 +77,7 @@ export default function ProductDetailPage() {
     .slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
+    <div className="min-h-screen bg-[#FDFBF7] dark:bg-stone-900">
       {/* Header spacer */}
       <div className="h-20" />
 
@@ -166,7 +167,7 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            <h1 className="font-playfair text-3xl md:text-4xl text-stone-800 mb-4">
+            <h1 className="font-playfair text-3xl md:text-4xl text-stone-800 dark:text-stone-100 mb-4">
               {product.name}
             </h1>
 
@@ -195,7 +196,7 @@ export default function ProductDetailPage() {
 
             {/* Price */}
             <div className="flex items-center gap-4 mb-6">
-              <span className="text-3xl font-semibold text-stone-800">
+              <span className="text-3xl font-semibold text-stone-800 dark:text-stone-100">
                 ₹{product.price.toLocaleString("en-IN")}
               </span>
               {product.originalPrice && (
@@ -211,13 +212,13 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Description */}
-            <p className="text-stone-600 leading-relaxed mb-8">
+            <p className="text-stone-600 dark:text-stone-400 leading-relaxed mb-8">
               {product.description}
             </p>
 
             {/* Material info */}
-            <div className="bg-stone-50 rounded-xl p-5 mb-8">
-              <h3 className="text-sm font-semibold text-stone-800 uppercase tracking-wider mb-3">
+            <div className="bg-stone-50 dark:bg-stone-800 rounded-xl p-5 mb-8">
+              <h3 className="text-sm font-semibold text-stone-800 dark:text-stone-200 uppercase tracking-wider mb-3">
                 Details
               </h3>
               <div className="grid grid-cols-2 gap-3">
@@ -331,17 +332,16 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Customer Reviews */}
-        <ReviewSection
-          productId={product.id}
-          productRating={product.rating}
-          productReviewCount={product.reviews}
-        />
+        <ReviewSection productId={product.id} />
+
+        {/* Product Recommendations */}
+        <ProductRecommendations currentProduct={product} />
 
         {/* Related products */}
         {related.length > 0 && (
-          <div className="mt-20 pt-16 border-t border-stone-100">
-            <h2 className="font-playfair text-2xl md:text-3xl text-stone-800 text-center mb-2">
-              You May Also Like
+          <div className="mt-20 pt-16 border-t border-stone-100 dark:border-stone-700">
+            <h2 className="font-playfair text-2xl md:text-3xl text-stone-800 dark:text-stone-100 text-center mb-2">
+              From the Same Collection
             </h2>
             <p className="text-stone-400 text-center mb-10">
               More from {categoryLabels[product.category]}

@@ -77,3 +77,54 @@ export const trustFeatures = [
   { title: "Care Guidance", description: "Lifetime support" },
   { title: "Quality Check", description: "Inspected before dispatch" }
 ];
+
+export const testimonials = [
+  {
+    id: 1,
+    name: "Priya Sharma",
+    location: "Mumbai",
+    rating: 5,
+    text: "The Everyday Essentials collection is stunning! I wear my DIARA studs daily and get compliments every time. The quality is exceptional for the price.",
+    product: "Everyday Essentials"
+  },
+  {
+    id: 2,
+    name: "Ananya Reddy",
+    location: "Bangalore",
+    rating: 5,
+    text: "Ordered a statement necklace for my anniversary and it arrived beautifully packaged. My husband thought it was from a luxury boutique. Absolutely love it!",
+    product: "Party & Statement"
+  },
+  {
+    id: 3,
+    name: "Meera Patel",
+    location: "Delhi",
+    rating: 5,
+    text: "I've been wearing my DIARA bracelet for 3 months now — no tarnishing at all. The 925 silver quality really shows. Will be ordering more!",
+    product: "Everyday Essentials"
+  },
+  {
+    id: 4,
+    name: "Kavitha Nair",
+    location: "Kochi",
+    rating: 5,
+    text: "Gifted the occasion set to my sister for her wedding. She was thrilled! The craftsmanship is beautiful and it looked absolutely regal.",
+    product: "Occasion / Heavy Edit"
+  },
+  {
+    id: 5,
+    name: "Riya Kapoor",
+    location: "Jaipur",
+    rating: 5,
+    text: "Finally found jewellery that's both modern and elegant. The minimalist designs are perfect for office wear. DIARA understands what women want.",
+    product: "Everyday Essentials"
+  },
+  {
+    id: 6,
+    name: "Sneha Iyer",
+    location: "Chennai",
+    rating: 5,
+    text: "The party earrings are showstoppers! Lightweight yet so impactful. I've already ordered two more pieces from the collection.",
+    product: "Party & Statement"
+  }
+];

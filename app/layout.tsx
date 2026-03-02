@@ -10,11 +10,14 @@ import { LoyaltyProvider } from "@/context/LoyaltyContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { CouponProvider } from "@/context/CouponContext";
 import { CompareProvider } from "@/context/CompareContext";
+import { ReviewProvider } from "@/context/ReviewContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import CartDrawer from "@/components/CartDrawer";
 import WishlistDrawer from "@/components/WishlistDrawer";
 import ToastContainer from "@/components/Toast";
 import PromoBanner from "@/components/PromoBanner";
 import CompareBar from "@/components/CompareBar";
+import SpinWheelTrigger from "@/components/SpinWheelTrigger";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -79,34 +82,39 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${playfair.variable} ${inter.variable} font-inter antialiased`}
+        className={`${playfair.variable} ${inter.variable} font-inter antialiased bg-[#FDFBF7] dark:bg-stone-900 text-stone-700 dark:text-stone-300 transition-colors duration-300`}
       >
-        <ToastProvider>
-          <AuthProvider>
-            <LoyaltyProvider>
-              <RecentlyViewedProvider>
-                <OrderProvider>
-                  <CartProvider>
-                    <CouponProvider>
-                      <WishlistProvider>
-                        <CompareProvider>
-                          <PromoBanner />
-                          {children}
-                          <CartDrawer />
-                          <WishlistDrawer />
-                          <CompareBar />
-                          <ToastContainer />
-                        </CompareProvider>
-                      </WishlistProvider>
-                    </CouponProvider>
-                  </CartProvider>
-                </OrderProvider>
-              </RecentlyViewedProvider>
-            </LoyaltyProvider>
-          </AuthProvider>
-        </ToastProvider>
+        <ThemeProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <LoyaltyProvider>
+                <RecentlyViewedProvider>
+                  <OrderProvider>
+                    <CartProvider>
+                      <CouponProvider>
+                        <WishlistProvider>
+                          <CompareProvider>
+                            <ReviewProvider>
+                              <PromoBanner />
+                              {children}
+                              <CartDrawer />
+                              <WishlistDrawer />
+                              <CompareBar />
+                              <SpinWheelTrigger />
+                              <ToastContainer />
+                            </ReviewProvider>
+                          </CompareProvider>
+                        </WishlistProvider>
+                      </CouponProvider>
+                    </CartProvider>
+                  </OrderProvider>
+                </RecentlyViewedProvider>
+              </LoyaltyProvider>
+            </AuthProvider>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
