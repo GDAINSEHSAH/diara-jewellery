@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
@@ -12,24 +11,28 @@ import { CouponProvider } from "@/context/CouponContext";
 import { CompareProvider } from "@/context/CompareContext";
 import { ReviewProvider } from "@/context/ReviewContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { ReferralProvider } from "@/context/ReferralContext";
+import { PriceAlertProvider } from "@/context/PriceAlertContext";
+import { StockAlertProvider } from "@/context/StockAlertContext";
+import { QAProvider } from "@/context/QAContext";
+import { GiftCardProvider } from "@/context/GiftCardContext";
+import { NotificationProvider } from "@/context/NotificationContext";
+import InstallPrompt from "@/components/InstallPrompt";
+import { LanguageProvider } from "@/context/LanguageContext";
 import CartDrawer from "@/components/CartDrawer";
 import WishlistDrawer from "@/components/WishlistDrawer";
 import ToastContainer from "@/components/Toast";
 import PromoBanner from "@/components/PromoBanner";
 import CompareBar from "@/components/CompareBar";
 import SpinWheelTrigger from "@/components/SpinWheelTrigger";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+import AbandonedCartPopup from "@/components/AbandonedCartPopup";
+import EmailPopup from "@/components/EmailPopup";
+import LiveChatWidget from "@/components/LiveChatWidget";
+import SocialProofPopup from "@/components/SocialProofPopup";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
+import KeyboardShortcuts from "@/components/KeyboardShortcuts";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
+import CookieConsent from "@/components/CookieConsent";
 
 export const metadata: Metadata = {
   title: "DIARA - Fine Silver Jewellery for Modern Elegance",
@@ -83,10 +86,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#292524" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          rel="stylesheet"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js')})}`,
+          }}
+        />
+      </head>
       <body
-        className={`${playfair.variable} ${inter.variable} font-inter antialiased bg-[#FDFBF7] dark:bg-stone-900 text-stone-700 dark:text-stone-300 transition-colors duration-300`}
+        className="font-inter antialiased bg-[#FDFBF7] dark:bg-stone-900 text-stone-700 dark:text-stone-300 transition-colors duration-300"
       >
+        <a href="#main-content" className="skip-to-main">
+          Skip to main content
+        </a>
         <ThemeProvider>
+        <LanguageProvider>
           <ToastProvider>
             <AuthProvider>
               <LoyaltyProvider>
@@ -97,13 +119,36 @@ export default function RootLayout({
                         <WishlistProvider>
                           <CompareProvider>
                             <ReviewProvider>
+                            <PriceAlertProvider>
+                            <StockAlertProvider>
+                            <QAProvider>
+                            <GiftCardProvider>
+                            <NotificationProvider>
+                            <ReferralProvider>
+                              <AnalyticsTracker />
                               <PromoBanner />
+                              <main id="main-content">
                               {children}
+                              </main>
                               <CartDrawer />
                               <WishlistDrawer />
                               <CompareBar />
                               <SpinWheelTrigger />
+                              <AbandonedCartPopup />
+                              <EmailPopup />
+                              <LiveChatWidget />
+                              <SocialProofPopup />
+                              <ExitIntentPopup />
+                              <KeyboardShortcuts />
+                              <InstallPrompt />
+                              <CookieConsent />
                               <ToastContainer />
+                            </ReferralProvider>
+                            </NotificationProvider>
+                            </GiftCardProvider>
+                            </QAProvider>
+                            </StockAlertProvider>
+                            </PriceAlertProvider>
                             </ReviewProvider>
                           </CompareProvider>
                         </WishlistProvider>
@@ -114,6 +159,7 @@ export default function RootLayout({
               </LoyaltyProvider>
             </AuthProvider>
           </ToastProvider>
+        </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

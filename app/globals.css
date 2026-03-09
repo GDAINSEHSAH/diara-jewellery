@@ -153,7 +153,20 @@
 
   /* Focus visible styles */
   *:focus-visible {
-    @apply outline-none ring-2 ring-stone-400 ring-offset-2;
+    @apply outline-none ring-2 ring-stone-500 ring-offset-2 ring-offset-white;
+  }
+
+  .dark *:focus-visible {
+    @apply ring-stone-400 ring-offset-stone-900;
+  }
+
+  /* Skip to main content link */
+  .skip-to-main {
+    @apply sr-only;
+  }
+
+  .skip-to-main:focus {
+    @apply not-sr-only fixed top-2 left-2 z-[100] px-4 py-2 bg-stone-800 text-white rounded-lg text-sm font-medium shadow-lg;
   }
 
   /* Toast animations */
@@ -184,6 +197,63 @@
   .animate-toast-progress {
     animation: toastProgress 3s linear forwards;
   }
+
+  /* Social proof slide in */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slideInLeft {
+    animation: slideInLeft 0.4s ease-out forwards;
+  }
+
+  /* Skeleton shimmer */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, #e7e5e4 25%, #d6d3d1 50%, #e7e5e4 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  /* Slide up animation */
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  /* Scrollbar hide utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer components {
@@ -207,8 +277,11 @@ html {
     scroll-behavior: auto;
   }
 
-  .animate-fadeIn,
-  .animate-bounce {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
